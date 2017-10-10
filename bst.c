@@ -1,19 +1,19 @@
 #include <stdio.h>		/* for puts,  */
 #include <stdlib.h> 		/* for malloc */
 #include <assert.h>		/* for assert */
-#include "llist.h"		
+#include "bst.h"		
+/* TODO Implement DoCheck */
+/* int llDoCheck = 1;		/* set true for paranoid consistency checking */
 
-int llDoCheck = 1;		/* set true for paranoid consistency checking */
-
-#define doCheck(_lp) (llDoCheck && llCheck(_lp))
+/* #define doCheck(_lp) (llDoCheck && llCheck(_lp)) */
 
 /* create a new list */
-LList *llAlloc()
+BSTree *bstAlloc()
 {
-  LList *lp = (LList *)malloc(sizeof(LList));
-  lp->first = lp->last = 0;
-  doCheck(lp);
-  return lp;
+  BSTree *tp = (BSTree *)malloc(sizeof(BSTree));
+  tp->root = lp->last = 0;
+  /* doCheck(lp); */
+  return tp;
 }
 
 /* recycle a list, discarding all items it contains */
