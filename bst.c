@@ -8,8 +8,8 @@
 BSTnode *bstAlloc(char* name)
 {
   BSTnode *tp = (BSTnode *)malloc(sizeof(BSTnode));
-  tp->name = malloc(strlen(name)+1);
-  strcpy(tp->name,name);
+  tp->name = malloc(sizeof(name)+1);
+  strcpy(tp->name, name);
   tp->left = tp->right = NULL;
   return tp;
 }
@@ -71,3 +71,67 @@ void bstPrint(BSTnode *tp)
   printf("%s\n",tp->name);
   bstPrint(tp->right);
 } 
+
+/* Method to search a tree and return node */
+BSTnode *search(BSTnode *bst, char *name){
+  BSTnode *curr = bst;
+  int tmp;
+  while(!(curr==NULL)){
+    tmp = strcmp(curr->name, name);
+    if(tmp > 0){
+      curr = curr->left;
+      continue;
+    }
+    else if(tmp < 0){
+      curr = curr->right;
+      continue;
+    }
+    else if(tmp == 0){
+      printf("Deleting %s\n", curr->name);
+      return curr;
+    }
+    else{
+      printf("Name not found\n");
+    }
+  }
+  return NULL;
+}
+
+/* Finding node with minimum value */
+BSTnode *min(BSTnode *tp){
+  BSTnode *curr = tp;
+  while(!(curr->left==NULL)){
+    curr = curr->left;
+  }
+  return curr;
+}
+
+/* removing a name from a tree, passing in  */
+void bstRemove(BSTnode *tp, BSTnode *rmv){
+  /* Case if node to remove is null */
+  if(tp == NULL){
+    return;
+  }
+  /* case if node to remove has no children */
+  if(rmv->left==NULL && rmv->right==NULL){
+    free(rmv);
+    rmv = NULL;
+  }
+  /* case if node to remove has no left child */
+  else if(rmv->left ==NULL){
+    BSTnode *tmp = rmv;
+    rmv = rmv->right;
+    free(tmp);
+  }
+  else if(rmv->right == NULL){
+    BSTnode *tmp = rmv;
+    rmv = rmv->left;
+    free(tmp);
+  }
+  else{
+    BSTnode *tmp = min(rmv->right);
+    rmv->name = tmp->name;
+  }
+
+  
+}

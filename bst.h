@@ -9,8 +9,6 @@ typedef struct BSTnode {
   char *name;               /* points to name in tree */
 } BSTnode;
 
-/* TODO: Implement DoCheck */
-/*extern int bstDoCheck;		/* set true for paranoid consistency checking */
 
 /* creates a new binary search tree */
 BSTnode *bstAlloc();
@@ -20,20 +18,20 @@ void bstFree(BSTnode *tp);
 
 /* adding a new node to the tree */
 BSTnode *bstInsert(BSTnode *tp, char *name);
+
 /* Delete all elements off of the tree */
 void bstMakeEmpty(BSTnode *tp);
 
-/* print tree contents.  Prints default message if tree is NULL */
+/* print tree contents */
 void bstPrint(BSTnode *tp);
 
-/* check tree consistency, always returns zero */
-/*int llCheck(BSTnode *tp);
+/* search method to find pointer to node to delete */
+BSTnode *search(BSTnode *bst, char *name);
 
-/* add employee name */
-/*void bstAdd(BSTnode *tp);
+BSTnode *min(BSTnode *tp);
 
 /* remove employee name */
-/*void bstRemove(BSTnode *tp);
+void bstRemove(BSTnode *tp, BSTnode *rmv);
 
 
-#endif	/* included */
+/*#endif	/* included */

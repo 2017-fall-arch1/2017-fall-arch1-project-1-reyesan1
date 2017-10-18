@@ -20,26 +20,41 @@ int gets_n(char *s, int limit)
 
 int main()
 {
+  printf("You are entering employee names: \n");
+  printf("Enter 'q' to quit entering names\n");
 
-  printf("Employee list is empty. Begin by entering a name\n");
-  
   char buf[100];
-  /* making an empy tree */
-  BSTnode *tp = bstAlloc();
-
-  printf("Enter 'q' to quit entering names\n");;
-while (!(strcmp(buf,"q")==0)){	/* build list */
+  /* making root of tree */
+  gets_n(buf,100);
+  BSTnode *tp = bstAlloc(buf);
+  
+  /* building the list */
+while (!(strcmp(buf,"q")==0)){	
     gets_n(buf, 100);
     if(strcmp(buf,"q")==0){
       break;
     }
     bstInsert(tp, buf);
-    /* printf("Pointer name is %s\n", tp->name);*/
+  
   }
 
+ printf("Enter 'p' to print list of 'r' to remove a name\n");
+
+ gets_n(buf, 100);
+
+ if(strcmp(buf,"p")==0){
   printf("Printing list of names in alphabetical order\n");
   bstPrint(tp);
+ }
 
+ else if(strcmp(buf, "r")==0){
+   printf("Enter a name you would like to remove\n");
+   gets_n(buf, 100);
+   BSTnode *rmv = search(tp, buf);
+   bstRemove(tp, rmv);
+   printf("List after removal\n");
+   bstPrint(tp);
+ }
   /*bstMakeEmpty(tp);
 
 

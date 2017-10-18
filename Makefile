@@ -19,5 +19,5 @@ clean:
 	rm -f *.o bstDemo
 
 demo: bstDemo
-	(echo first; echo "second line"; echo "third and last") | ./bstDemo
+	./bstDemo
 
