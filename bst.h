@@ -31,7 +31,7 @@ BSTnode *search(BSTnode *bst, char *name);
 BSTnode *min(BSTnode *tp);
 
 /* remove employee name */
-void bstRemove(BSTnode *tp, BSTnode *rmv);
+BSTnode *bstRemove(BSTnode *tp, BSTnode *rmv);
 
 
 /*#endif	/* included */

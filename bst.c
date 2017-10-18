@@ -68,7 +68,7 @@ void bstPrint(BSTnode *tp)
     return;
   }
   bstPrint(tp->left);
-  printf("%s\n",tp->name);
+  printf("-%s\n",tp->name);
   bstPrint(tp->right);
 } 
 
@@ -94,7 +94,6 @@ BSTnode *search(BSTnode *bst, char *name){
       printf("Name not found\n");
     }
   }
-  return NULL;
 }
 
 /* Finding node with minimum value */
@@ -107,30 +106,45 @@ BSTnode *min(BSTnode *tp){
 }
 
 /* removing a name from a tree, passing in  */
-void bstRemove(BSTnode *tp, BSTnode *rmv){
+BSTnode *bstRemove(BSTnode *tp, BSTnode *rmv){
   /* Case if node to remove is null */
-  if(tp == NULL){
-    return;
+  if(tp == NULL || rmv == NULL){
+    return tp;
   }
+  
   /* case if node to remove has no children */
   if(rmv->left==NULL && rmv->right==NULL){
-    free(rmv);
+    printf("In no children, name is %s\n", rmv->name);
+    /*free(rmv);
+      free(rmv->name); */
+    rmv->name = NULL;
     rmv = NULL;
+    bstPrint(tp);
+    return tp;
   }
+
   /* case if node to remove has no left child */
   else if(rmv->left ==NULL){
     BSTnode *tmp = rmv;
     rmv = rmv->right;
     free(tmp);
+    return tp;
   }
+
+  /* case if node to remove has no right child */
   else if(rmv->right == NULL){
     BSTnode *tmp = rmv;
     rmv = rmv->left;
     free(tmp);
+    return tp;
   }
+
+  /* case if node to remove has 2 children */
   else{
     BSTnode *tmp = min(rmv->right);
     rmv->name = tmp->name;
+    bstRemove(rmv, tmp);
+    return tp;
   }
 
   

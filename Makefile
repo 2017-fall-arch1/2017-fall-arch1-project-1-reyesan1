@@ -21,3 +21,4 @@ clean:
 demo: bstDemo
 	./bstDemo
 
+# bstDemo runs the code for entering employees */
