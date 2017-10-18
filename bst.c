@@ -1,101 +1,74 @@
 #include <stdio.h>		/* for puts,  */
 #include <stdlib.h> 		/* for malloc */
 #include <assert.h>		/* for assert */
+#include <string.h>             /* for strcmp */
 #include "bst.h"		
 /* TODO Implement DoCheck */
 /* int llDoCheck = 1;		/* set true for paranoid consistency checking */
 
 /* #define doCheck(_lp) (llDoCheck && llCheck(_lp)) */
 
-/* create a new list */
-BSTree *bstAlloc()
+/* create a new binary search tree */
+BSTnode *bstAlloc()
 {
-  BSTree *tp = (BSTree *)malloc(sizeof(BSTree));
-  tp->root = lp->last = 0;
-  /* doCheck(lp); */
+  BSTnode *tp = (BSTnode *)malloc(sizeof(BSTnode));
+  tp->left = tp->right = NULL;
   return tp;
 }
 
-/* recycle a list, discarding all items it contains */
-void llFree(LList *lp)
+/* recycle a tree, discarding all items it contains */
+void bstFree(BSTnode *tp)
 {
-  doCheck(lp);
-  llMakeEmpty(lp);
-  free(lp);
+  bstMakeEmpty(tp);
+  free(tp);
 }
 
-/* Delete all elements off of the list */
-void llMakeEmpty(LList *lp)
+/* Delete all elements off of the tree */
+void bstMakeEmpty(BSTnode *tp)
 {
-  LLItem *current = lp->first, *next;
-  doCheck(lp);
-  while (current) {
-    next = current->next;
-    free(current->str);
-    free(current);
-    current = next;
+  BSTnode *curr = tp, *left, *right;
+  if(curr == NULL){
+    return;
   }
-  lp->first = lp->last = 0;	/* list is empty */
-  doCheck(lp);
+  else{
+       bstMakeEmpty(curr->left);
+       bstMakeEmpty(curr->right);
+       free(curr->name);
+       free(curr);
+  }
+  tp->left = tp->right = NULL;
+  	/* tree is empty */
+  /* doCheck(lp); */
 }
   
-/* append a copy of str to end of list */
-void llPut(LList *lp, char *s)
+/* adding a new node to the tree*/
+BSTnode *bstInsert(BSTnode *tp, char *n)
 {
-  int len;
-  char *scopy;
-  LLItem *i;
-
-  doCheck(lp);
-  /* w = freshly allocated copy of putWord */
-  for (len = 0; s[len]; len++) /* compute length */
-    ;
-  scopy = (char *)malloc(len+1);
-  for (len = 0; s[len]; len++) /* copy chars */
-    scopy[len] = s[len];
-  scopy[len] = 0;			/* terminate copy */
-
-
-  /* i = new item containing s */
-  i = (LLItem *)malloc(sizeof(LLItem));
-  i->str = scopy;
-  i->next = 0;
-
-  /* append to end of list */
-  if (lp->last) {			/* list not empty */
-    lp->last->next = i;
-  } else {			/* list empty */
-    lp->first = i;
+  /* case if new node */
+  if(tp == NULL){
+    tp = bstAlloc();
+    tp->name = n;
+    tp->left = tp->right = NULL;
   }
-
-  /* new item is last on list */
-  lp->last = i;
-  doCheck(lp);
+  /* case if less than, go to left*/
+  else if((strcmp(n, tp->name)) < 0){
+    tp->left = bstInsert(tp->left, n);
+  }
+  /* case if greater than or equal, go to right */
+  else{
+    tp->right = bstInsert(tp->right, n);
+  }
 }
 
 /* print list membership.  Prints default mesage if message is NULL */
-void llPrint(LList *lp, char *msg)
+void bstPrint(BSTnode *tp)
 {
-  LLItem *ip;
-  int count = 1;
-  doCheck(lp);
-  puts(msg ? msg :" List contents:");
-  for (ip = lp->first; ip; ip = ip->next) {
-    printf("  %d: <%s>\n", count, ip->str);
-    count++;
+  if(tp == NULL){
+    printf("End of list\n");
+    return;
   }
-}
 
-/* check llist consistency */
-int llCheck(LList *lp)
-{
-  LLItem *ip;
-  ip = lp->first;
-  if (!ip) 
-    assert(lp->last == 0);
-  else {
-    for (; ip->next; ip = ip->next);
-    assert(ip == lp->last);
-  }
-  return 0;
-}
+  printf(tp->name,"\n");
+  bstPrint(tp->left);
+  bstPrint(tp->right);
+} 
