@@ -27,20 +27,18 @@ int main()
   /* making an empy tree */
   BSTnode *tp = bstAlloc();
 
-  printf("Enter 'q' to quit entering names\n");
-  gets_n(buf, 100);
-  tp->name = buf;
-  BSTnode *root = tp;
+  printf("Enter 'q' to quit entering names\n");;
 while (!(strcmp(buf,"q")==0)){	/* build list */
     gets_n(buf, 100);
     if(strcmp(buf,"q")==0){
       break;
     }
     bstInsert(tp, buf);
+    /* printf("Pointer name is %s\n", tp->name);*/
   }
 
-  printf("Printing list of names in ascending order\n");
-  bstPrint(root);
+  printf("Printing list of names in alphabetical order\n");
+  bstPrint(tp);
 
   /*bstMakeEmpty(tp);
 

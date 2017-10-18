@@ -3,15 +3,13 @@
 #include <assert.h>		/* for assert */
 #include <string.h>             /* for strcmp */
 #include "bst.h"		
-/* TODO Implement DoCheck */
-/* int llDoCheck = 1;		/* set true for paranoid consistency checking */
-
-/* #define doCheck(_lp) (llDoCheck && llCheck(_lp)) */
 
 /* create a new binary search tree */
-BSTnode *bstAlloc()
+BSTnode *bstAlloc(char* name)
 {
   BSTnode *tp = (BSTnode *)malloc(sizeof(BSTnode));
+  tp->name = malloc(strlen(name)+1);
+  strcpy(tp->name,name);
   tp->left = tp->right = NULL;
   return tp;
 }
@@ -37,38 +35,39 @@ void bstMakeEmpty(BSTnode *tp)
        free(curr);
   }
   tp->left = tp->right = NULL;
-  	/* tree is empty */
-  /* doCheck(lp); */
 }
   
 /* adding a new node to the tree*/
 BSTnode *bstInsert(BSTnode *tp, char *n)
 {
+  int tmp;
   /* case if new node */
   if(tp == NULL){
-    tp = bstAlloc();
-    tp->name = n;
-    tp->left = tp->right = NULL;
+    tp =bstAlloc(n);
+    return tp;
   }
+  
   /* case if less than, go to left*/
-  else if((strcmp(n, tp->name)) < 0){
+  tmp = strcmp(n,tp->name);
+  if(tmp < 0){
     tp->left = bstInsert(tp->left, n);
+    return tp;
   }
   /* case if greater than or equal, go to right */
   else{
     tp->right = bstInsert(tp->right, n);
+    return tp;
   }
+  
 }
 
-/* print list membership.  Prints default mesage if message is NULL */
+/* print list membership in alphabetical order */
 void bstPrint(BSTnode *tp)
 {
   if(tp == NULL){
-    printf("End of list\n");
     return;
   }
-
-  printf(tp->name,"\n");
   bstPrint(tp->left);
+  printf("%s\n",tp->name);
   bstPrint(tp->right);
 } 
