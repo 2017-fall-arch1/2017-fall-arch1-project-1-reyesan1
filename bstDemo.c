@@ -52,8 +52,7 @@ while (!(strcmp(buf,"q")==0)){
      else if(strcmp(buf, "r")==0){
        printf("-----Enter a name you would like to remove\n");
        gets_n(buf, 100);
-       //rmv = search(tp, buf);
-       bstRemove(tp, buf);
+       tp = bstRemove(tp, buf);
        printf("List after removal\n");
        bstPrint(tp);
      }

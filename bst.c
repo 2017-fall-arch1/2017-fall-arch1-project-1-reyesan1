@@ -131,21 +131,21 @@ BSTnode *bstRemove(BSTnode *tp, char *n){
   else if(tp->left ==NULL){
     BSTnode *tmp = tp;
     tp = tp->right;
-    free(tp);
+    free(tmp);
   }
 
   /* case if node to remove has no right child */
   else if(tp->right == NULL){
     BSTnode *tmp = tp;
     tp = tp->left;
-    free(tp);
+    free(tmp);
   }
 
   /* case if node to remove has 2 children */
   else{
     BSTnode *tmp = min(tp->right);
     tp->name = tmp->name;
-    tp->right = bstRemove(tp, tmp->name);
+    tp->right = bstRemove(tp->right, tmp->name);
   }
 
   }
