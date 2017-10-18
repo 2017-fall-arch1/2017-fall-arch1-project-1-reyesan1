@@ -4,9 +4,15 @@
 
 /* a binary search tree tnode */
 typedef struct BSTnode {
-  struct BSTnode *left;   /* points to left child */
-  struct BSTnode *right;  /* points to the right child */
-  char *name;               /* points to name in tree */
+  // Points to left child
+  struct BSTnode *left;
+
+  // Points to right child
+  struct BSTnode *right;
+
+  // Points to name in tree
+  char *name;
+  
 } BSTnode;
 
 
@@ -28,6 +34,7 @@ void bstPrint(BSTnode *tp);
 /* search method to find pointer to node to delete */
 BSTnode *search(BSTnode *bst, char *name);
 
+/* Method to find minimum node in a branch */
 BSTnode *min(BSTnode *tp);
 
 /* remove employee name */

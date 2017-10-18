@@ -4,7 +4,7 @@
 #include <string.h>             /* for strcmp */
 #include "bst.h"		
 
-/* create a new binary search tree */
+/* creating a new binary search tree */
 BSTnode *bstAlloc(char* name)
 {
   BSTnode *tp = (BSTnode *)malloc(sizeof(BSTnode));
@@ -74,22 +74,29 @@ void bstPrint(BSTnode *tp)
 
 /* Method to search a tree and return node */
 BSTnode *search(BSTnode *bst, char *name){
+  // Current node to not lose pointer
   BSTnode *curr = bst;
+  // Temporary variable for comparison
   int tmp;
+  // Traversing the tree
   while(!(curr==NULL)){
     tmp = strcmp(curr->name, name);
+    // Going left
     if(tmp > 0){
       curr = curr->left;
       continue;
     }
+    // Goin right
     else if(tmp < 0){
       curr = curr->right;
       continue;
     }
+    // Found the node
     else if(tmp == 0){
       printf("Deleting %s\n", curr->name);
       return curr;
     }
+    // Node not found
     else{
       printf("Name not found\n");
     }
@@ -98,10 +105,13 @@ BSTnode *search(BSTnode *bst, char *name){
 
 /* Finding node with minimum value */
 BSTnode *min(BSTnode *tp){
+  // Current node to not lose pointer
   BSTnode *curr = tp;
+  // Traversing all the way left
   while(!(curr->left==NULL)){
     curr = curr->left;
   }
+  // Returning pointer to minimum node
   return curr;
 }
 
@@ -112,14 +122,17 @@ BSTnode *bstRemove(BSTnode *tp, char *n){
   if(tp == NULL){
     return tp;
   }
+  // Comparing strings
   int tmp = strcmp(tp->name, n);
+  // Going left
   if(tmp > 0){
     tp->left = bstRemove(tp->left, n);
   }
+  // Going right
   else if(tmp < 0){
     tp->right = bstRemove(tp->right, n);
   }
-
+  // Node found, 3 different cases
   else{
   /* case if node to remove has no children */
   if(tp->right==NULL && tp->left==NULL){
@@ -144,10 +157,12 @@ BSTnode *bstRemove(BSTnode *tp, char *n){
   /* case if node to remove has 2 children */
   else{
     BSTnode *tmp = min(tp->right);
+    // Swap names, and remove tmp node
     tp->name = tmp->name;
     tp->right = bstRemove(tp->right, tmp->name);
   }
 
   }
+  // Return root pointer
   return tp;
 }

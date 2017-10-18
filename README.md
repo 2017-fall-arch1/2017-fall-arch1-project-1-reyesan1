@@ -29,4 +29,7 @@ To delete binaries:
 $ make clean
 ~~~
 
+After running, the program will prompt the user to enter names for the list. Once they are done entering names, 'q' will then exit and ask the user if they would like to 'p' print the list, 'r' remove a name, or 'a' add another name. It will keep asking until the user 'e' exits.
 
+SOURCES:
+K&R C book, computing and technology binary search tree pseudocode
