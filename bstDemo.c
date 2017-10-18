@@ -52,9 +52,8 @@ while (!(strcmp(buf,"q")==0)){
      else if(strcmp(buf, "r")==0){
        printf("-----Enter a name you would like to remove\n");
        gets_n(buf, 100);
-       BSTnode *rmv = (BSTnode *)malloc(sizeof(BSTnode));
-       rmv = search(tp, buf);
-       //tp = bstRemove(tp, rmv);
+       //rmv = search(tp, buf);
+       bstRemove(tp, buf);
        printf("List after removal\n");
        bstPrint(tp);
      }

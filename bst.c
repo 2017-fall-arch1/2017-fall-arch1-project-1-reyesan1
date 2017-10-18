@@ -105,47 +105,49 @@ BSTnode *min(BSTnode *tp){
   return curr;
 }
 
+
 /* removing a name from a tree, passing in  */
-BSTnode *bstRemove(BSTnode *tp, BSTnode *rmv){
+BSTnode *bstRemove(BSTnode *tp, char *n){
   /* Case if node to remove is null */
-  if(tp == NULL || rmv == NULL){
+  if(tp == NULL){
     return tp;
   }
-  
+  int tmp = strcmp(tp->name, n);
+  if(tmp > 0){
+    tp->left = bstRemove(tp->left, n);
+  }
+  else if(tmp < 0){
+    tp->right = bstRemove(tp->right, n);
+  }
+
+  else{
   /* case if node to remove has no children */
-  if(rmv->left==NULL && rmv->right==NULL){
-    printf("In no children, name is %s\n", rmv->name);
-    /*free(rmv);
-      free(rmv->name); */
-    rmv->name = NULL;
-    rmv = NULL;
-    bstPrint(tp);
-    return tp;
+  if(tp->right==NULL && tp->left==NULL){
+    free(tp);
+    tp = NULL;
   }
 
   /* case if node to remove has no left child */
-  else if(rmv->left ==NULL){
-    BSTnode *tmp = rmv;
-    rmv = rmv->right;
-    free(tmp);
-    return tp;
+  else if(tp->left ==NULL){
+    BSTnode *tmp = tp;
+    tp = tp->right;
+    free(tp);
   }
 
   /* case if node to remove has no right child */
-  else if(rmv->right == NULL){
-    BSTnode *tmp = rmv;
-    rmv = rmv->left;
-    free(tmp);
-    return tp;
+  else if(tp->right == NULL){
+    BSTnode *tmp = tp;
+    tp = tp->left;
+    free(tp);
   }
 
   /* case if node to remove has 2 children */
   else{
-    BSTnode *tmp = min(rmv->right);
-    rmv->name = tmp->name;
-    bstRemove(rmv, tmp);
-    return tp;
+    BSTnode *tmp = min(tp->right);
+    tp->name = tmp->name;
+    tp->right = bstRemove(tp, tmp->name);
   }
 
-  
+  }
+  return tp;
 }
